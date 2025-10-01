@@ -5,7 +5,6 @@ const postSchema = new mongoose.Schema(
       title: {
          type: String,
          required: [true, "A post must have a title"],
-         trim: true,
          maxlength: [120, "Title cannot be more than 120 characters"],
          unique: [true, "A post title must be unique"],
       },
@@ -21,7 +20,6 @@ const postSchema = new mongoose.Schema(
       tags: [
          {
             type: String,
-            trim: true,
             lowercase: true,
          },
       ],
@@ -29,7 +27,6 @@ const postSchema = new mongoose.Schema(
          type: String,
          unique: true,
          lowercase: true,
-         trim: true,
       },
       thumbnail: {
          type: String,
