@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { promisify } from "node:util";
 import User from "../models/userSchema";
 const jwt = require("jsonwebtoken");
+import wrap from "express-async-wrap";
 
 const jwtVerify = promisify(jwt.verify);
 
@@ -18,4 +19,4 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
    }
 };
 
-export default auth;
+export default wrap(auth);

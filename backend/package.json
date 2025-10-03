@@ -1,9 +1,9 @@
 {
    "name": "blog",
    "version": "1.0.0",
-   "description": "A full-stack blog platform built with **Node.js**, **Express**, and optionally **Next.js/React** for the frontend.   This project is designed as a learning experience and includes **authentication, role-based access, CRUD for posts, middleware for security",
+   "description": "A full-stack blog platform built with **Node.js**, **Express**, and optionally **Next.js** for the frontend.   This project is designed as a learning experience and includes **authentication, role-based access, CRUD for posts, middleware for security",
    "scripts": {
-      "dev": "nodemon --exec ts-node backend/index.ts",
+      "dev": "nodemon --exec ts-node src/index.ts",
       "build": "tsc",
       "start": "node dist/index.js",
       "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,17 +26,20 @@
       "dotenv": "^17.2.3",
       "express": "^4.21.2",
       "express-async-errors": "^3.1.1",
+      "express-async-wrap": "^1.0.0",
       "express-mongo-sanitize": "^2.2.0",
       "express-rate-limit": "^8.1.0",
       "helmet": "^8.1.0",
       "hpp": "^0.2.3",
       "jsonwebtoken": "^9.0.2",
-      "mongoose": "^8.18.3"
+      "mongoose": "^8.18.3",
+      "zod": "^4.1.11"
    },
    "devDependencies": {
       "@types/bcrypt": "^6.0.0",
       "@types/cors": "^2.8.19",
       "@types/express": "^5.0.3",
+      "@types/express-async-wrap": "^1.0.3",
       "@types/hpp": "^0.2.6",
       "@types/jsonwebtoken": "^9.0.10",
       "@types/morgan": "^1.9.10",

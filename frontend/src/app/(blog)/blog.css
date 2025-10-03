@@ -1,0 +1,19 @@
+:root {
+  --background: #F1E8E4;
+  --foreground: #002f23;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  background-image: url("/texture.png");
+  background-blend-mode: multiply;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}

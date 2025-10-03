@@ -14,6 +14,17 @@ const errorHandler = (
       });
    }
 
+   if (err.name === "MongooseError") {
+      return res.status(400).json({
+         status: "failure",
+         message: err.message,
+      });
+   }
+
+   if (err.name === "APIError") {
+      return res.status(400).json({ status: "failure", message: err.message });
+   }
+
    if (err.name === "JsonWebTokenError") {
       return res.status(400).json({
          status: "failure",
@@ -21,10 +32,10 @@ const errorHandler = (
       });
    }
 
-   if (err.message.includes("E11000")) {
+   if (err.message.includes("11000")) {
       return res.status(400).json({
          status: "failure",
-         message: "Email already exists",
+         message: err.message,
       });
    }
 
@@ -32,11 +43,20 @@ const errorHandler = (
       return res.status(400).json({ status: "failure", message: "Invalid ID" });
    }
 
-   console.error(err.stack);
+   if (err.name === "TokenExpiredError") {
+      return res.status(400).json({
+         status: "failure",
+         message: "Token has expired",
+      });
+   }
+
+   // console.error(err.stack);
    if (err instanceof APIError) {
-      return res
-         .status(err.statusCode)
-         .json({ status: "failure", message: err.message });
+      return res.status(err.statusCode).json({
+         status: "failure",
+         message: err.message,
+         errors: err.errors || null,
+      });
    }
 
    return res

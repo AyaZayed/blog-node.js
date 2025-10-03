@@ -31,7 +31,7 @@ const postSchema = new mongoose.Schema<IPost>(
       },
       thumbnail: {
          type: String,
-         default: null,
+         required: [true, "A post must have a thumbnail"],
       },
       images: [
          {
