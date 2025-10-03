@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import IUser from "../interfaces/userInterface.model";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<IUser>(
    {
       name: {
          type: String,
@@ -18,11 +19,6 @@ const userSchema = new mongoose.Schema(
       password: {
          type: String,
          required: [true, "A user must have a password"],
-         minlength: [8, "Password must be at least 8 characters"],
-         match: [
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character",
-         ],
       },
       role: {
          type: String,

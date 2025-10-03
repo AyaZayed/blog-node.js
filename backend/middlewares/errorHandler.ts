@@ -21,6 +21,17 @@ const errorHandler = (
       });
    }
 
+   if (err.message.includes("E11000")) {
+      return res.status(400).json({
+         status: "failure",
+         message: "Email already exists",
+      });
+   }
+
+   if (err.name === "CastError") {
+      return res.status(400).json({ status: "failure", message: "Invalid ID" });
+   }
+
    console.error(err.stack);
    if (err instanceof APIError) {
       return res

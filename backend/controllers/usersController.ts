@@ -18,6 +18,20 @@ class UsersController {
          throw new APIError(400, "Passwords do not match");
       }
 
+      if (data.password.length < 8) {
+         throw new APIError(400, "Password must be at least 8 characters");
+      }
+
+      const pass_pattern =
+         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+      if (!pass_pattern.test(data.password)) {
+         throw new APIError(
+            400,
+            "Password must contain at least one letter, one number and one special character"
+         );
+      }
+
       const SALT_ROUNDS = Number(process.env.SALT_ROUNDS) || 10;
 
       const hashedPassowrd = await bcrypt.hash(data.password, SALT_ROUNDS);
@@ -50,8 +64,6 @@ class UsersController {
       if (!user) {
          throw new APIError(400, "Invalid email or password");
       }
-
-      console.log(password, user);
 
       const isMatched = await bcrypt.compare(password, user.password);
 
@@ -98,6 +110,35 @@ class UsersController {
          status: "success",
          data: user,
       });
+   }
+
+   async updateUserById(req: Request, res: Response) {
+      const userId = req.params.id;
+      const userData = req.body;
+
+      const updatedUser = await User.findByIdAndUpdate(
+         { _id: userId },
+         { name: userData.name, email: userData.email },
+         { new: true, runValidators: true }
+      );
+
+      if (!updatedUser) {
+         throw new APIError(404, `user with id ${userId} could not be updated`);
+      }
+
+      res.status(200).json({ status: "success", data: { updatedUser } });
+   }
+
+   async deleteUserById(req: Request, res: Response) {
+      const userId = req.params.id;
+
+      const deletedUser = await User.findByIdAndDelete({ _id: userId });
+
+      if (!deletedUser) {
+         throw new APIError(404, `user with id ${userId} could not be deleted`);
+      }
+
+      res.status(200).json({ status: "success", data: { deletedUser } });
    }
 }
 

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import IPost from "../interfaces/postInterface";
 
-const postSchema = new mongoose.Schema(
+const postSchema = new mongoose.Schema<IPost>(
    {
       title: {
          type: String,
@@ -39,6 +40,10 @@ const postSchema = new mongoose.Schema(
          },
       ],
       isPublished: {
+         type: Boolean,
+         default: false,
+      },
+      isFeatured: {
          type: Boolean,
          default: false,
       },

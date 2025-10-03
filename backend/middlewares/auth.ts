@@ -2,11 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { promisify } from "node:util";
 import User from "../models/userSchema";
 const jwt = require("jsonwebtoken");
-import IUser from "../interfaces/userInterface.model";
-
-type RequestWithUser = Request & {
-   user: IUser;
-};
 
 const jwtVerify = promisify(jwt.verify);
 
@@ -18,7 +13,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
    if (!user) {
       throw new Error("User not found");
    } else {
-      (req as RequestWithUser).user = user;
+      req.user = user;
       next();
    }
 };
